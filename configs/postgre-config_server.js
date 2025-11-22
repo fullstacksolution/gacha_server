@@ -1,6 +1,6 @@
 module.exports = {
   "username": "gacha_admin",
-  "password": "7e7NVZkJiKz88LZfsaTr4neevjSev3kR",
+  "password": "bqo7UWQnvfFrJmwOOK39Fa0k6KIPPQ9X",
   "database": "gacha_db_yi3q",
   "host": "dpg-d4gmjo2li9vc73dnala0-a",
   "dialect": "postgres",
