@@ -186,7 +186,7 @@ router.get('/category/:category', async function (req, res, next) {
     if (badges) {
       const badgeArray = badges.split(',').map(Number).sort();
       const badgeArrayString = badgeArray.map(id => id.toString());
-    
+
       whereClause = {
         ...whereClause,
         badge_ids: {
@@ -259,6 +259,13 @@ router.post('/add', ensureAuthenticated, async function (req, res, next) {
   req.checkBody('total_limit', '全体の回数は必須です。').notEmpty();
   req.checkBody('user_limit', '一人当たりの最大ガチャ参加可能回数は必須です。').notEmpty();
   let missingFieldErrors = req.validationErrors();
+
+  data.point = Number(data.point)
+  data.win_probability = data.win_probability ? Number(data.win_probability) : 0
+  data.category_id = Number(data.category_id)
+  data.total_limit = Number(data.total_limit)
+  data.user_limit = Number(data.user_limit)
+
   if (missingFieldErrors) {
     let err = new TypedError('register error', 400, 'missing_field', {
       errors: missingFieldErrors,
@@ -309,7 +316,7 @@ router.post('/edit', ensureAuthenticated, async function (req, res, next) {
     })
 })
 
-router.post('/:gachaId/image', ensureAuthenticated, upload.single('image'), async (req, res) => {
+router.post('/:gachaId/image', ensureAuthenticated, upload.single('image'), async (req, res, next) => {
   const gachaId = req.params.gachaId;
   const imagePath = path.join(__dirname, req.file.path);
   await Gacha.findOne({ where: { id: gachaId } })
